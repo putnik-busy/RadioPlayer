@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RadioPlayer</string>
+    <string name="empty_station_list">Список станций пуст</string>
+    <string name="notification_playing_stream">Воспроизведение аудиопотока</string>
+</resources>
