@@ -1,6 +1,7 @@
 package com.justApp.RadioPlayer.data.repository;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.util.LruCache;
 
 import com.justApp.RadioPlayer.data.pojo.NowPlaying;
@@ -8,6 +9,7 @@ import com.justApp.RadioPlayer.data.pojo.Station;
 import com.justApp.RadioPlayer.data.repository.remote.RemoteSource;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -58,7 +60,8 @@ public class StationRepository implements DataSource {
         if (lastUpdate == -1) {
             return getAndSaveRemoteDataSource();
         } else {
-            mIsExpiredData = Calendar.getInstance().after(lastUpdate + EXPIRED_TIME);
+            Date expiredTimeUpdate = new Date(lastUpdate - EXPIRED_TIME);
+            mIsExpiredData = Calendar.getInstance().getTime().after(expiredTimeUpdate);
 
             if (!mIsExpiredData && !mCacheStations.snapshot().isEmpty()) {
                 return Observable.from(mCacheStations.snapshot().values()).toList();
@@ -168,6 +171,7 @@ public class StationRepository implements DataSource {
                 });
     }
 
+    @Nullable
     private Station getStationWithId(@NonNull Integer id) {
         checkNotNull(id);
         if (mCacheStations == null || mCacheStations.snapshot().isEmpty()) {

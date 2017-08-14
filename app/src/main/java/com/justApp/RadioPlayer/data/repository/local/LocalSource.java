@@ -330,7 +330,7 @@ public class LocalSource implements DataSource {
 
             values = addThumb(station, idImageRow);
             db.update(TableColumns.ThumbEntry.TABLE_NAME, values,
-                    TableColumns.ThumbEntry.COLUMN_IMAGE_ID,
+                    TableColumns.ThumbEntry.COLUMN_IMAGE_ID + " =?",
                     new String[]{String.valueOf(station.getImage().getThumb().getIdImage())});
             values.clear();
 
